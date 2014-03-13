@@ -3,8 +3,6 @@
 /* exported SongQueue, _queue */
 
 var SongQueue = Songs.extend({
-  _queue: [],
-
   initialize: function(){
   }
 
