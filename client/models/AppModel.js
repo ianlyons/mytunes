@@ -1,5 +1,5 @@
 // App.js - Defines a backbone model class for the whole app.
-/* global Backbone, SongModel, SongQueue */
+/* global Backbone, SongQueue, SongModel */
 /* exported AppModel */
 
 var AppModel = Backbone.Model.extend({
@@ -24,14 +24,16 @@ var AppModel = Backbone.Model.extend({
       if (this.get('currentSong') === undefined) {
         this.set('currentSong', song);
       } else {
-        this.get('songQueue').add(song);
+        // Uses new SongModel to create copy of song
+        // Allows for multiple queues of same song
+        this.get('songQueue').push(new SongModel(song.attributes));
       }
     }, this);
 
     // Register songQueue listener for deqeue
     this.get('songQueue').on('dequeue', function(song) {
       console.log('AppModel dequeue');
-      this.get('songQueue').remove(song);
+      this.get('songQueue').shift();
 
     }, this);
   }
